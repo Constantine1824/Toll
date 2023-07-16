@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "walletapp"
+version = "0.1.0"
+description = "A simple wallet app"
+authors = ["Ayomide <ayomidet905@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.2.3"
+django-rest-framework = "^0.1.0"
+django-jazzmin = "^2.6.0"
+djoser = "^2.2.0"
+load-dotenv = "^0.1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-django = "^4.5.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
