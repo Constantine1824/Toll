@@ -25,6 +25,9 @@ class User(AbstractBaseUser,PermissionsMixin):
     class Meta:
         app_label = 'accounts'
 
+    def __str__(self):
+        return self.email
+
 
 class UserProfile(UUIDModelField):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -34,5 +37,8 @@ class UserProfile(UUIDModelField):
 
     class Meta:
         app_label = 'accounts'
+
+    def __str__(self):
+        return f'{self.user}'
 
 # Create your models here.
