@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework import exceptions
 from rest_framework.permissions import IsAuthenticated
 
-class CreateUserAPIView(APIView):
+class CreateUserProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self,request):
         serializer = UserProfileCreationSerializer

@@ -2,9 +2,9 @@ import pytest
 import pytest_django
 from .models import User
 from .models import UserProfile
+from django.urls import reverse
 
-
-class TestAccounts:
+class TestAccountModels:
     @pytest.mark.django_db
     def testCreateUser(self):
         user = User.objects.create_user(email='ayomidet905@gmail.com', password='random')
@@ -29,3 +29,40 @@ class TestAccounts:
         assert profile.user == user
         assert profile.id != 1
         assert profile.first_name == 'Ayo'
+
+
+class TestAccountViews:
+
+    @pytest.mark.django_db
+    def testCreateUserView(self,client):
+        data = {
+            "email" : "ayomidet905@gmail.com",
+            "password" : "Constantine_",
+            "re_password" : "Constantine_"
+        }
+        url = reverse('user-list')
+        resp = client.post(url,data=data)
+        print(resp.json())
+        assert User.objects.get(email='ayomidet905@gmail.com') is not None
+        assert resp.status_code == 201
+
+    @pytest.mark.django_db
+    def testLoginandRefreshView(self,client,create_user):
+        user = create_user(email='kanyin@gmail.com', password='JohnDoe@12')
+        user.save()
+        print(User.objects.get(email='kanyin@gmail.com'))
+        data = {
+            'email': 'kanyin@gmail.com',
+            "password" : "JohnDoe@12"
+        }
+        url = reverse('jwt-create')
+        resp = client.post(url,data=data)
+        print(resp.json())
+        assert resp.status_code == 201
+        assert 'access' in resp.json()
+        assert 'refresh' in resp.json()
+        url2 = reverse('jwt-refresh')
+        resp2 = client.post(url2, data= {
+            "refresh" : resp.json()['refresh']
+        })
+        assert 'access' in resp2.json()
