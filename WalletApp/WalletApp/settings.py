@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'djoser',
+    'phonenumber_field',
     'apps.accounts',
     'apps.wallet'
     
@@ -142,6 +143,13 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+#Email
+EMAIL_HOST = os.environ.get('EMAI_HOST')
+EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
+EMAIL_PORT = os.environ.get("EMAIL_PORT")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 
 # Static files (CSS, JavaScript, Images)
