@@ -13,6 +13,7 @@ class UserProfileCreationSerializer(ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['first_name','last_name']
+        
     def create(self, validated_data):
         request = self.context.get('request')
         user = request.user
