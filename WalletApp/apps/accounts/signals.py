@@ -4,7 +4,8 @@ from .models import UserProfile, OneTimeCode
 from .SMS_helper import send_sms
 
 @receiver(post_save, sender=UserProfile)
-def send_confirmation_sms(sender, instance,created):
+def send_confirmation_sms(sender, instance,created,**kwargs):
     if created:
         code = OneTimeCode.objects.create(user=instance.user).generate_random_code()
-        send_sms(client_phone_number=instance.phone_no,token=code)
+        print(code)
+        send_sms(client_phone_number=instance.mobile_number,token=code)

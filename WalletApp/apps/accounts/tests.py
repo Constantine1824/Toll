@@ -48,9 +48,10 @@ class TestAccountViews:
 
     @pytest.mark.django_db
     def testLoginandRefreshView(self,client,create_user):
-        user = create_user(email='kanyin@gmail.com', password='JohnDoe@12')
+        user = create_user(email='kanyin@gmail.com')
+        user.set_password('JohnDoe@12')
         user.save()
-        print(User.objects.get(email='kanyin@gmail.com'))
+        print(User.objects.get(email='kanyin@gmail.com').password)
         data = {
             'email': 'kanyin@gmail.com',
             "password" : "JohnDoe@12"
@@ -58,7 +59,7 @@ class TestAccountViews:
         url = reverse('jwt-create')
         resp = client.post(url,data=data)
         print(resp.json())
-        assert resp.status_code == 201
+        assert resp.status_code == 200
         assert 'access' in resp.json()
         assert 'refresh' in resp.json()
         url2 = reverse('jwt-refresh')

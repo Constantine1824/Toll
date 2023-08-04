@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'djoser',
-    'phonenumber_field',
     'apps.accounts',
     'apps.wallet'
     
@@ -108,9 +107,9 @@ DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE" : True,
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
-    #'SEND_ACTIVATION_EMAIL': True,
-    #'SEND_CONFIRMATION_EMAIL' : True
+    'ACTIVATION_URL': 'auth/profile/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL' : True
 
 }
 # Password validation
@@ -145,12 +144,18 @@ USE_I18N = True
 USE_TZ = True
 
 #Email
-EMAIL_HOST = os.environ.get('EMAI_HOST')
-EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
 EMAIL_PORT = os.environ.get("EMAIL_PORT")
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
+
+# Twilio settings
+ACCOUNT_SID = os.environ.get('ACCOUNT_SID')
+AUTH_TOKEN = os.environ.get('AUTH_TOKEN')
+PHONE_NUMBER = os.environ.get('PHONE_NO')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
